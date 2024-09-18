@@ -14,8 +14,17 @@
   }
 }
 
+html,
 body {
+  margin: 0px;
+  padding: 0px;
   color: var(--foreground);
   background: var(--background);
   font-synthesis: none;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
