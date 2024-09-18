@@ -24,7 +24,8 @@ export const Searchbar = ({}) => {
       router.replace('/');
     }
 
-    if (!search || q === search) return;
+    if (q === search) return;
+
     router.push(`search?q=${search}`);
   };
 
