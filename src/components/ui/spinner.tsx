@@ -1,4 +1,4 @@
-export const Spiner = () => {
+export const Spinner = () => {
   return (
     <div className="text-center">
       <div role="status">
