@@ -8,7 +8,7 @@ export function generateStaticParams() {
 
 export default function Page({ params }: { params: { id: string } }) {
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 px-4 py-4">
       <BookDetail bookId={params.id} />
       <ReviewEditor bookId={params.id} />
       <ReviewList bookId={params.id} />
