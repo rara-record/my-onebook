@@ -19,8 +19,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
 }>) {
   return (
     <html lang="ko">
@@ -32,6 +34,7 @@ export default function RootLayout({
           <main className="py-3">{children}</main>
           <footer className="py-24 text-gray-600">제작 @bora</footer>
         </div>
+        {modal}
         <div id="modal-root"></div>
       </body>
     </html>
