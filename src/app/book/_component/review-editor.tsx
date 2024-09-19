@@ -1,18 +1,8 @@
 'use client';
 
 import { createReviewAction } from '@/actions/create-review.action';
-import { Alert } from '@/components/ui/alert';
-import { Spiner } from '@/components/ui/spiner';
-import {
-  useActionState,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
-
-interface AlertContent {
-  content: React.ReactNode;
-}
+import { Spinner } from '@/components/ui/spinner';
+import { useActionState, useEffect } from 'react';
 
 export default function ReviewEditor({ bookId }: { bookId: string }) {
   const [state, formAction, isPending] = useActionState(
@@ -52,7 +42,7 @@ export default function ReviewEditor({ bookId }: { bookId: string }) {
             disabled:opacity-75
             "
           >
-            {isPending ? <Spiner /> : <span> 작성 하기</span>}
+            {isPending ? <Spinner /> : <span> 작성 하기</span>}
           </button>
         </div>
       </form>

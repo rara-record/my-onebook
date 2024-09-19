@@ -1,4 +1,5 @@
 import { ReviewData } from '@/types/review';
+import ReviewItemDeleteButton from './review-item-delete-button';
 
 export default async function ReviewList({
   bookId,
@@ -40,7 +41,7 @@ const ReviewItem = ({
       </div>
       <div className="flex gap-3 text-gray-400 text-sm">
         <div>{new Date(createdAt).toLocaleString()}</div>
-        <div className="cursor-pointer">삭제하기</div>
+        <ReviewItemDeleteButton reviewId={id} bookId={bookId} />
       </div>
     </div>
   );
