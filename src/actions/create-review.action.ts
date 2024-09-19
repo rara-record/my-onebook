@@ -5,23 +5,24 @@ import { revalidateTag } from 'next/cache';
 
 export const createReviewAction = async (
   _: unknown,
-  FormData: FormData
+  formData: FormData
 ) => {
-  const bookId = FormData.get('bookId')?.toString();
-  const content = FormData.get('content')?.toString();
-  const author = FormData.get('author')?.toString();
+  const { bookId, content, author } = Object.fromEntries(formData);
 
-  if (!bookId || !content || !author) {
+  if (
+    typeof bookId !== 'string' ||
+    typeof content !== 'string' ||
+    typeof author !== 'string'
+  )
     return {
       status: false,
       error: '리뷰 내용을 입력해주세요.',
     };
-  }
 
   try {
     await delay(250);
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/review/1`,
+      `${process.env.NEXT_PUBLIC_API_URL}/review`,
       {
         method: 'POST',
         body: JSON.stringify({ bookId, content, author }),
