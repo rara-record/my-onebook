@@ -6,7 +6,8 @@ export default async function BookDetail({
   bookId: string;
 }) {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/book/${bookId}`
+    `${process.env.NEXT_PUBLIC_API_URL}/book/${bookId}`,
+    { cache: 'force-cache' }
   );
   const data: BookData = await response.json();
 

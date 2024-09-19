@@ -6,7 +6,8 @@ export default async function ReviewList({
   bookId: string;
 }) {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/review/book/${bookId}`
+    `${process.env.NEXT_PUBLIC_API_URL}/review/book/${bookId}`,
+    { next: { tags: [`review-${bookId}`] } }
   );
 
   if (!response.ok) {
