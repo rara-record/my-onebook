@@ -1,40 +1,16 @@
-import { revalidatePath } from 'next/cache';
+import { createReviewAction } from '@/actions/create-review.action';
 
 export default async function ReviewEditor({
   bookId,
 }: {
   bookId: string;
 }) {
-  const createReview = async (FormData: FormData) => {
-    'use server';
-
-    const bookId = FormData.get('bookId')?.toString();
-    const content = FormData.get('content')?.toString();
-    const author = FormData.get('author')?.toString();
-
-    if (!bookId || !content || !author) {
-      return;
-    }
-
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/review`,
-        {
-          method: 'POST',
-          body: JSON.stringify({ bookId, content, author }),
-        }
-      );
-
-      revalidatePath(`/book/${bookId}`);
-    } catch (error) {
-      console.error(error);
-      return;
-    }
-  };
-
   return (
     <section className="flex flex-col">
-      <form action={createReview} className="flex flex-col gap-2">
+      <form
+        action={createReviewAction}
+        className="flex flex-col gap-2"
+      >
         <input name="bookId" defaultValue={bookId} hidden />
         <textarea
           required
