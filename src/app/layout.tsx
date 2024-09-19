@@ -32,6 +32,7 @@ export default function RootLayout({
           <main className="py-3">{children}</main>
           <footer className="py-24 text-gray-600">제작 @bora</footer>
         </div>
+        <div id="modal-root"></div>
       </body>
     </html>
   );
