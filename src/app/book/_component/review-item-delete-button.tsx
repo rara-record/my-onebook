@@ -28,8 +28,13 @@ export default function ReviewItemDeleteButton({
 
   return (
     <form ref={formRef} action={formAction}>
-      <input name="reviewId" value={reviewId} hidden />
-      <input name="bookId" value={bookId} hidden />
+      <input
+        name="reviewId"
+        defaultValue={reviewId}
+        hidden
+        readOnly
+      />
+      <input name="bookId" defaultValue={bookId} hidden readOnly />
       <div
         onClick={() => formRef.current?.requestSubmit()}
         className="cursor-pointer"
