@@ -2,6 +2,7 @@
 
 import { ReviewData } from '@/types/review';
 import ReviewItemDeleteButton from './review-item-delete-button';
+import { formatDate } from '@/utils/format-date';
 
 export default function ReviewItem({
   id,
@@ -17,7 +18,7 @@ export default function ReviewItem({
         {content}
       </div>
       <div className="flex gap-3 text-gray-400 text-sm">
-        <div>{new Date(createdAt).toLocaleString()}</div>
+        <div>{formatDate(createdAt)}</div>
         <ReviewItemDeleteButton reviewId={id} bookId={bookId} />
       </div>
     </div>
