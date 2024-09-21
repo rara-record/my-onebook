@@ -21,6 +21,7 @@ export const BookItem = ({
         <Image
           src={coverImgUrl}
           fill
+          priority
           sizes="80px"
           alt={`도서 ${title}의 이미지`}
           className="object-contain"

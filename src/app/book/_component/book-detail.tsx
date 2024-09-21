@@ -39,6 +39,7 @@ export default async function BookDetail({
           <Image
             src={coverImgUrl}
             fill
+            priority
             sizes="269px"
             alt={`도서 상세 ${title} 이미지`}
             className="z-[1] object-contain"
