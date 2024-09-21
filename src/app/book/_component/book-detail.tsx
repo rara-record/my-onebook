@@ -10,13 +10,14 @@ export default async function BookDetail({
     `${process.env.NEXT_PUBLIC_API_URL}/book/${bookId}`,
     { cache: 'force-cache' }
   );
-  const data: BookData = await response.json();
 
   if (!response.ok) {
     throw new Error(
       `book details fetch failed: ${response.statusText}`
     );
   }
+
+  const data: BookData = await response.json();
 
   const {
     title,

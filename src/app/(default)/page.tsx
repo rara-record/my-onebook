@@ -2,7 +2,37 @@ import { BookItem } from '@/components/book-item';
 import { BookData } from '@/types/book';
 import { delay } from '@/utils/delay';
 import { Suspense } from 'react';
+import type { Metadata } from 'next';
 import { BookListSkeleton } from './_component/book-list-skeleton';
+
+export const metadata: Metadata = {
+  title: '한입 북스',
+  description: '한입 북스에 등록된 도서를 만나보세요.',
+  openGraph: {
+    title: '한입 북스',
+    description: '한입 북스에 등록된 도서를 만나보세요.',
+    images: ['/thumbnail.png'],
+  },
+};
+
+export default function Home() {
+  return (
+    <div className="flex flex-col gap-5">
+      <section>
+        <h1 className="mb-0 text-lg font-bold">지금 추천하는 도서</h1>
+        <Suspense fallback={<BookListSkeleton count={3} />}>
+          <RandomBooks />
+        </Suspense>
+      </section>
+      <section>
+        <h1 className="mb-0 text-lg font-bold">등록된 모든 도서</h1>
+        <Suspense fallback={<BookListSkeleton count={10} />}>
+          <AllBooks />
+        </Suspense>
+      </section>
+    </div>
+  );
+}
 
 const RandomBooks = async () => {
   await delay(1500);
@@ -49,22 +79,3 @@ const AllBooks = async () => {
 export const dynamic = 'force-dynamic';
 // 특정 페이지의 유형을 강제로 Static, Dynamic 페이지로 설정
 // 컴포넌트 스트리밍 예제를 위해 사용됨
-
-export default function Home() {
-  return (
-    <div className="flex flex-col gap-5">
-      <section>
-        <h1 className="mb-0 text-lg font-bold">지금 추천하는 도서</h1>
-        <Suspense fallback={<BookListSkeleton count={3} />}>
-          <RandomBooks />
-        </Suspense>
-      </section>
-      <section>
-        <h1 className="mb-0 text-lg font-bold">등록된 모든 도서</h1>
-        <Suspense fallback={<BookListSkeleton count={10} />}>
-          <AllBooks />
-        </Suspense>
-      </section>
-    </div>
-  );
-}
