@@ -1,4 +1,5 @@
 import { BookData } from '@/types/book';
+import Image from 'next/image';
 
 export default async function BookDetail({
   bookId,
@@ -29,13 +30,19 @@ export default async function BookDetail({
   return (
     <section className="flex flex-col gap-3">
       <div
-        className="flex justify-center px-5 py-5 bg-center bg-no-repeat bg-cover relative before:content-[' '] before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-black before:bg-opacity-70"
+        className="flex justify-center px-5 py-5 bg-center bg-no-repeat bg-cover relative before:content-[' ']
+        before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-black before:bg-opacity-70"
         style={{ backgroundImage: `url('${coverImgUrl}')` }}
       >
-        <img
-          src={coverImgUrl}
-          className="z-[1] max-h-[350px] h-full"
-        />
+        <div className="w-[269px] h-[350px] relative">
+          <Image
+            src={coverImgUrl}
+            fill
+            sizes="269px"
+            alt={`도서 상세 ${title} 이미지`}
+            className="z-[1] object-contain"
+          />
+        </div>
       </div>
       <div className="flex flex-col gap-2">
         <h2 className="font-bold">{title}</h2>
