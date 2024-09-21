@@ -2,7 +2,6 @@ import { BookItem } from '@/components/book-item';
 import { BookData } from '@/types/book';
 import { delay } from '@/utils/delay';
 import { Suspense } from 'react';
-import { BookItemSkeleton } from './_component/book-item-skeleton';
 import { BookListSkeleton } from './_component/book-list-skeleton';
 
 const RandomBooks = async () => {
