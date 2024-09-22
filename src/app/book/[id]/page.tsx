@@ -35,11 +35,24 @@ export async function generateMetadata({
   };
 }
 
-export function generateStaticParams() {
-  return [{ id: '1' }, { id: '2' }, { id: '3' }];
+export async function generateStaticParams() {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/book`,
+    { cache: 'force-cache' }
+  );
+
+  if (!response.ok) {
+    throw new Error(
+      `book details fetch failed: ${response.statusText}`
+    );
+  }
+
+  const books: BookData[] = await response.json();
+
+  return books.map((book) => book.id.toString());
 }
 
-export default function Page({ params }: { params: { id: string } }) {
+export default function Page({ params }: Props) {
   return (
     <div className="flex flex-col gap-3 px-4 py-4">
       <BookDetail bookId={params.id} />
