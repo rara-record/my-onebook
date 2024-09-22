@@ -2,6 +2,8 @@ import { BookData } from '@/types/book';
 import Link from 'next/link';
 import Image from 'next/image';
 
+type Props = BookData & { blurredImage: string };
+
 export const BookItem = ({
   id,
   title,
@@ -10,23 +12,25 @@ export const BookItem = ({
   author,
   publisher,
   coverImgUrl,
-}: BookData) => {
+  blurredImage,
+}: Props) => {
   return (
     <Link
       href={`book/${id}`}
       scroll={false}
       className="flex gap-4 py-5 px-5 border-b border-gray-300"
     >
-      <div className="relative w-20 h-[105px]">
+      <figure className="relative w-20 h-[105px] flex-shrink-0">
         <Image
           src={coverImgUrl}
           fill
-          priority
           sizes="80px"
-          alt={`도서 ${title}의 이미지`}
-          className="object-contain"
+          placeholder="blur"
+          blurDataURL={blurredImage}
+          alt={`책 제목: ${title}, 저자: ${author}`}
+          className="object-cover"
         />
-      </div>
+      </figure>
       <div>
         <h2 className="font-bold">{title}</h2>
         <h4>{subTitle}</h4>

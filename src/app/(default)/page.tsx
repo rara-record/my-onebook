@@ -2,7 +2,6 @@ import { BookItem } from '@/components/book-item';
 import { BookData } from '@/types/book';
 import { getRemoteImageBase64 } from '@/utils/getBase64';
 import type { Metadata } from 'next';
-import { BookListSkeleton } from './_component/book-list-skeleton';
 
 export const metadata: Metadata = {
   title: '한입 북스',
@@ -20,13 +19,13 @@ export default function Home() {
       <section>
         <h1 className="mb-0 text-lg font-bold">지금 추천하는 도서</h1>
         {/* <Suspense fallback={<BookListSkeleton count={3} />}> */}
-          <RandomBooks />
+        <RandomBooks />
         {/* </Suspense> */}
       </section>
       <section>
         <h1 className="mb-0 text-lg font-bold">등록된 모든 도서</h1>
         {/* <Suspense fallback={<BookListSkeleton count={10} />}> */}
-          <AllBooks />
+        <AllBooks />
         {/* </Suspense> */}
       </section>
     </div>
@@ -38,16 +37,30 @@ const RandomBooks = async () => {
     `${process.env.NEXT_PUBLIC_API_URL}/book/random`,
     { next: { revalidate: 3 } }
   );
-  const randomBooks: BookData[] = await response.json();
 
   if (!response.ok) {
     return <div>오류가 발생했습니다...</div>;
   }
 
+  const randomBooks: BookData[] = await response.json();
+
+  const blurredImages = await Promise.all(
+    randomBooks.map(async (book) => {
+      const blurredImage = await getRemoteImageBase64(
+        book.coverImgUrl
+      );
+      return blurredImage || ''; // fallback to empty string if null
+    })
+  );
+
   return (
     <div>
-      {randomBooks.map((book) => (
-        <BookItem key={book.id} {...book} />
+      {randomBooks.map((book, index) => (
+        <BookItem
+          key={book.id}
+          {...book}
+          blurredImage={blurredImages[index]}
+        />
       ))}
     </div>
   );
@@ -58,16 +71,30 @@ const AllBooks = async () => {
     `${process.env.NEXT_PUBLIC_API_URL}/book`,
     { cache: 'force-cache' }
   );
-  const allBooks: BookData[] = await response.json();
 
   if (!response.ok) {
     return <div>오류가 발생했습니다...</div>;
   }
 
+  const allBooks: BookData[] = await response.json();
+
+  const blurredImages = await Promise.all(
+    allBooks.map(async (book) => {
+      const blurredImage = await getRemoteImageBase64(
+        book.coverImgUrl
+      );
+      return blurredImage; // fallback to empty string if null
+    })
+  );
+
   return (
     <div>
-      {allBooks.map((book) => (
-        <BookItem key={book.id} {...book} />
+      {allBooks.map((book, index) => (
+        <BookItem
+          key={book.id}
+          {...book}
+          blurredImage={blurredImages[index]}
+        />
       ))}
     </div>
   );

@@ -1,9 +1,7 @@
-import { Metadata } from 'next';
-import { Suspense } from 'react';
-import { delay } from '@/utils/delay';
-import { BookData } from '@/types/book';
 import { BookItem } from '@/components/book-item';
-import { BookListSkeleton } from '../_component/book-list-skeleton';
+import { BookData } from '@/types/book';
+import { getRemoteImageBase64 } from '@/utils/getBase64';
+import { Metadata } from 'next';
 
 type Props = {
   searchParams: { q?: string };
@@ -39,16 +37,30 @@ const SearchResult = async ({ q }: { q: string }) => {
     `${process.env.NEXT_PUBLIC_API_URL}/book/search?q=${q}`,
     { cache: 'force-cache' }
   );
-  const data: BookData[] = await response.json();
 
   if (!response.ok) {
     return <div>오류가 발생했습니다..</div>;
   }
 
+  const data: BookData[] = await response.json();
+
+  const blurredImages = await Promise.all(
+    data.map(async (book) => {
+      const blurredImage = await getRemoteImageBase64(
+        book.coverImgUrl
+      );
+      return blurredImage || ''; // fallback to empty string if null
+    })
+  );
+
   return (
     <div>
-      {data.map((book) => (
-        <BookItem key={book.id} {...book} />
+      {data.map((book, index) => (
+        <BookItem
+          key={book.id}
+          {...book}
+          blurredImage={blurredImages[index]}
+        />
       ))}
     </div>
   );
