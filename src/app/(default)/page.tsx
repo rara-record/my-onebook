@@ -22,7 +22,7 @@ export default function Home() {
         <h1 className="mb-0 text-lg font-bold">지금 추천하는 도서</h1>
         <Suspense fallback={<BookListSkeleton count={3} />}>
           <RandomBooks />
-        </Suspense>
+        {/* </Suspense> */}
       </section>
       <section>
         <h1 className="mb-0 text-lg font-bold">등록된 모든 도서</h1>

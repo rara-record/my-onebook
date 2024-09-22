@@ -30,19 +30,11 @@ export default function Page({
 }: {
   searchParams: { q?: string };
 }) {
-  return (
-    <Suspense
-      key={searchParams.q || ''}
-      fallback={<BookListSkeleton count={10} />}
-    >
-      <SearchResult q={searchParams.q || ''} />
-    </Suspense>
-  );
+  return <SearchResult q={searchParams.q || ''} />;
 }
 
 // 비동기 컴포넌트가 아니라면, loading 컴포넌트를 사용할 수 없음
 const SearchResult = async ({ q }: { q: string }) => {
-  await delay(1500);
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/book/search?q=${q}`,
     { cache: 'force-cache' }

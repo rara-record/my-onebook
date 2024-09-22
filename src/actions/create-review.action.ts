@@ -1,6 +1,5 @@
 'use server';
 
-import { delay } from '@/utils/delay';
 import { revalidateTag } from 'next/cache';
 
 export const createReviewAction = async (
@@ -20,7 +19,6 @@ export const createReviewAction = async (
     };
 
   try {
-    await delay(250);
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/review`,
       {
