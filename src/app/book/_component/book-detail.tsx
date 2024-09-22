@@ -17,7 +17,7 @@ export default async function BookDetail({
     );
   }
 
-  const data: BookData = await response.json();
+  const bookDetail: BookData = await response.json();
 
   const {
     title,
@@ -26,7 +26,7 @@ export default async function BookDetail({
     author,
     publisher,
     coverImgUrl,
-  } = data;
+  } = bookDetail;
 
   return (
     <section className="flex flex-col gap-3">
@@ -35,16 +35,16 @@ export default async function BookDetail({
         before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-black before:bg-opacity-70"
         style={{ backgroundImage: `url('${coverImgUrl}')` }}
       >
-        <div className="w-[269px] h-[350px] relative">
+        <figure className="w-[269px] h-[350px] relative">
           <Image
             src={coverImgUrl}
             fill
             priority
             sizes="269px"
-            alt={`도서 상세 ${title} 이미지`}
-            className="z-[1] object-contain"
+            alt={`책 제목: ${title}, 저자: ${author}`}
+            className="z-[1] object-cover"
           />
-        </div>
+        </figure>
       </div>
       <div className="flex flex-col gap-2">
         <h2 className="font-bold">{title}</h2>
