@@ -1,4 +1,7 @@
+import withPlaiceholder from '@plaiceholder/next';
+
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
   logging: {
     fetches: {
@@ -6,8 +9,15 @@ const nextConfig = {
     },
   },
   images: {
-    domains: ['shopping-phinf.pstatic.net'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'shopping-phinf.pstatic.net',
+        port: '',
+        pathname: '/**',
+      },
+    ],
   },
 };
 
-export default nextConfig;
+export default withPlaiceholder(nextConfig);
